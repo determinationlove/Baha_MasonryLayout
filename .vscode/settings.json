@@ -26,5 +26,6 @@
     "test/**/__snapshots__": true,
     "package-lock.json": true,
     "*.{css,sass,scss}.d.ts": true
-  }
+  },
+  "discord.lowerDetailsEditing": "Workspace: 這就是我想要的巴哈姆特"
 }

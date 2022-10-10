@@ -4,11 +4,14 @@ import './App.css';
 
 import axios from "axios";
 import * as cheerio from "cheerio";
+import { title } from 'process';
 
 const Baha = () => {
+	const data: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[]  = [];
+
 	axios.get('https://forum.gamer.com.tw/B.php?bsn=60076')
 		.then(res => {
-			const data = [];
+			//const data = [];
 			const $ = cheerio.load(res.data); // 載入 body
 			const list = $(".b-list__row");
 			for (let i = 0; i < list.length; i++) {
@@ -22,25 +25,28 @@ const Baha = () => {
 
 				data.push({ title, author, date, sort, gp, link });
 			}
-
-			return data;
 			//console.log(data);
-		})
+		});
+		
+		return data;
 }
+
 
 const Hello = () => {
 
-  let data = Baha();
+	//Baha();
+	let data: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[] = Baha();
+	//console.log(data);
 
-  return (
-    <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      
-      <p>{data.title[0]}</p>
-    </div>
+	return (
+		<div>
+			<div className="Hello">
+				<img width="200" alt="icon" src={icon} />
+			</div>
+			<h1>electron-react-boilerplate</h1>
+
+			<p></p>
+		</div>
   );
 };
 
