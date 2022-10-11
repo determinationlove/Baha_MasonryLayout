@@ -27,5 +27,9 @@
     "package-lock.json": true,
     "*.{css,sass,scss}.d.ts": true
   },
-  "discord.lowerDetailsEditing": "Workspace: 這就是我想要的巴哈姆特"
+  "discord.lowerDetailsEditing": "Workspace: 這就是我想要的巴哈姆特",
+  "compile-hero.disable-compile-files-on-did-save-code": false,
+  "prettier.useTabs": true,
+  "prettier.tabWidth": 4,
+  "prettier.printWidth": 200
 }
