@@ -6,10 +6,11 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import { title } from 'process';
 
-
-
 const Baha = () => {
-	let data: { 'title': string; 'author': string; 'date': string; 'sort': string; 'gp': string; 'link': string; }[]  = [];
+
+
+	const data: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[]  = [];
+
 
 	axios.get('https://forum.gamer.com.tw/B.php?bsn=60076')
 		.then(res => {
@@ -17,40 +18,27 @@ const Baha = () => {
 			const $ = cheerio.load(res.data); // 載入 body
 			const list = $(".b-list__row");
 			for (let i = 0; i < list.length; i++) {
+				const title = list.eq(i).find('.b-list__main__title ').text();
+				const author = list.eq(i).find('.b-list__count__user a').text();
+				const date = list.eq(i).find('.b-list__time__edittime a').text();
+				const sort = list.eq(i).find('.b-list__summary__sort').text();
+				const gp = list.eq(i).find('.b-list__summary__gp').text();
+				//const img = list.eq(i).find('.b-list__img lazyloaded').attr('data-thumbnail');
+				const link = "https://forum.gamer.com.tw/" + list.eq(i).find('.b-list__main a').attr('href');
 
-				if (list.eq(i).find('.b-list__main__title ').text() != '') {
-					const title = list.eq(i).find('.b-list__main__title ').text();
-					const author = list.eq(i).find('.b-list__count__user a').text();
-					const date = list.eq(i).find('.b-list__time__edittime a').text();
-					const sort = list.eq(i).find('.b-list__summary__sort').text();
-					const gp = list.eq(i).find('.b-list__summary__gp').text();
-					//const img = list.eq(i).find('.b-list__img lazyloaded').attr('data-thumbnail');
-					const link = "https://forum.gamer.com.tw/" + list.eq(i).find('.b-list__main a').attr('href');
-
-					data.push({ title, author, date, sort, gp, link });
-				}
+				data.push({ title, author, date, sort, gp, link });
 			}
 			//console.log(data);
 		});
 		
 		return data;
-		//BahaData = data;
 }
 
-export type Props = {
-    bahaData: { 'title': string; 'author': string; date: string; sort: string; gp: string; link: string; }[],
-};
 
-const Hello = ( {bahaData} : Props ) => {
 
-	var Data:any = bahaData[Data];
-	var array = "";
-	Data[title].forEach(function(bahaData: any) {
-		array = array + bahaData['title'] + ", ";
-    });
-	array = array.replace(/,\s*$/, ""); 
+const Hello = () => {
 
-	console.log(array);
+
 
 	return (
 		<div>
@@ -59,28 +47,17 @@ const Hello = ( {bahaData} : Props ) => {
 			</div>
 			<h1>electron-react-boilerplate</h1>
 
-			 <p>
-				
-				
-			 </p>
 
-			
 		</div>
   );
 };
 
 export default function App() {
-
-	let BahaData: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[]  = [];
-	BahaData = Baha();
-
-	
-
-	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<Hello bahaData={BahaData}/>} />
-			</Routes>
-		</Router>
-	);
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Hello />} />
+      </Routes>
+    </Router>
+  );
 }
