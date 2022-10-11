@@ -6,8 +6,10 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import { title } from 'process';
 
+
+
 const Baha = () => {
-	const data: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[]  = [];
+	let data: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[]  = [];
 
 	axios.get('https://forum.gamer.com.tw/B.php?bsn=60076')
 		.then(res => {
@@ -15,28 +17,36 @@ const Baha = () => {
 			const $ = cheerio.load(res.data); // 載入 body
 			const list = $(".b-list__row");
 			for (let i = 0; i < list.length; i++) {
-				const title = list.eq(i).find('.b-list__main__title ').text();
-				const author = list.eq(i).find('.b-list__count__user a').text();
-				const date = list.eq(i).find('.b-list__time__edittime a').text();
-				const sort = list.eq(i).find('.b-list__summary__sort').text();
-				const gp = list.eq(i).find('.b-list__summary__gp').text();
-				//const img = list.eq(i).find('.b-list__img lazyloaded').attr('data-thumbnail');
-				const link = "https://forum.gamer.com.tw/" + list.eq(i).find('.b-list__main a').attr('href');
 
-				data.push({ title, author, date, sort, gp, link });
+				if (list.eq(i).find('.b-list__main__title ').text() != '') {
+					const title = list.eq(i).find('.b-list__main__title ').text();
+					const author = list.eq(i).find('.b-list__count__user a').text();
+					const date = list.eq(i).find('.b-list__time__edittime a').text();
+					const sort = list.eq(i).find('.b-list__summary__sort').text();
+					const gp = list.eq(i).find('.b-list__summary__gp').text();
+					//const img = list.eq(i).find('.b-list__img lazyloaded').attr('data-thumbnail');
+					const link = "https://forum.gamer.com.tw/" + list.eq(i).find('.b-list__main a').attr('href');
+
+					data.push({ title, author, date, sort, gp, link });
+				}
 			}
-			//console.log(data);
+			console.log(data);
 		});
 		
 		return data;
+		//BahaData = data;
 }
 
+export type Props = {
+    bahaData: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[],
+};
 
-const Hello = () => {
+const Hello = ( {bahaData} : Props ) => {
 
-	//Baha();
-	let data: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[] = Baha();
-	//console.log(data);
+	var array;
+	array = bahaData;
+
+	console.log(array);
 
 	return (
 		<div>
@@ -45,17 +55,33 @@ const Hello = () => {
 			</div>
 			<h1>electron-react-boilerplate</h1>
 
-			<p></p>
+			 <p>
+				{array.map((id, index) => { 
+					return (
+						<h3 key={"data" + index}>
+							{id.title} 
+						</h3>
+					)
+				})}
+			 </p>
+
+			
 		</div>
   );
 };
 
 export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
-  );
+
+	let BahaData: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[]  = [];
+	BahaData = Baha();
+
+	
+
+	return (
+		<Router>
+			<Routes>
+				<Route path="/" element={<Hello bahaData={BahaData}/>} />
+			</Routes>
+		</Router>
+	);
 }
