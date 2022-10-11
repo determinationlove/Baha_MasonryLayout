@@ -9,7 +9,7 @@ import { title } from 'process';
 
 
 const Baha = () => {
-	let data: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[]  = [];
+	let data: { 'title': string; 'author': string; 'date': string; 'sort': string; 'gp': string; 'link': string; }[]  = [];
 
 	axios.get('https://forum.gamer.com.tw/B.php?bsn=60076')
 		.then(res => {
@@ -30,7 +30,7 @@ const Baha = () => {
 					data.push({ title, author, date, sort, gp, link });
 				}
 			}
-			console.log(data);
+			//console.log(data);
 		});
 		
 		return data;
@@ -38,13 +38,17 @@ const Baha = () => {
 }
 
 export type Props = {
-    bahaData: { title: string; author: string; date: string; sort: string; gp: string; link: string; }[],
+    bahaData: { 'title': string; 'author': string; date: string; sort: string; gp: string; link: string; }[],
 };
 
 const Hello = ( {bahaData} : Props ) => {
 
-	var array;
-	array = bahaData;
+	var Data:any = bahaData[Data];
+	var array = "";
+	Data[title].forEach(function(bahaData: any) {
+		array = array + bahaData['title'] + ", ";
+    });
+	array = array.replace(/,\s*$/, ""); 
 
 	console.log(array);
 
@@ -56,13 +60,8 @@ const Hello = ( {bahaData} : Props ) => {
 			<h1>electron-react-boilerplate</h1>
 
 			 <p>
-				{array.map((id, index) => { 
-					return (
-						<h3 key={"data" + index}>
-							{id.title} 
-						</h3>
-					)
-				})}
+				
+				
 			 </p>
 
 			
