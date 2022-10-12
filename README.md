@@ -9,10 +9,10 @@
 <br />
 <div align="center">
   <a href="https://github.com/determinationlove/Baha_MasonryLayout">
-    <img src="/public/img/baha_icon.png" alt="Logo" width="80" height="80">
+    <img src="assets/icons/BahaMasonryLayout中字黑.png" alt="Logo" width="12%" height="12%">
   </a>
 
-  <h3 align="center">巴哈瀑布流 - 排版腳本</h3>
+  <h3 align="center">巴哈瀑布流 - 場外休憩區閱覽器</h3>
 
   <p align="center">
     <a href="https://github.com/determinationlove/Baha_MasonryLayout"><strong>Explore the docs »</strong></a>
