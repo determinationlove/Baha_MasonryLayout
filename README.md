@@ -9,10 +9,10 @@
 <br />
 <div align="center">
   <a href="https://github.com/determinationlove/Baha_MasonryLayout">
-    <img src="/public/img/baha_icon.png" alt="Logo" width="80" height="80">
+    <img src="assets/icons/BahaMasonryLayout中字黑.png" alt="Logo" width="12%" height="12%">
   </a>
 
-  <h3 align="center">巴哈瀑布流 - 排版腳本</h3>
+  <h3 align="center">巴哈瀑布流 - 場外休憩區閱覽器</h3>
 
   <p align="center">
     <a href="https://github.com/determinationlove/Baha_MasonryLayout"><strong>Explore the docs »</strong></a>
@@ -40,7 +40,7 @@
 [license-shield]: https://img.shields.io/github/license/determinationlove/Baha_MasonryLayout.svg?style=for-the-badge
 [license-url]: https://github.com/determinationlove/Baha_MasonryLayout/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
+[linkedin-url]: www.linkedin.com/in/幽冥-燐火-a08229237
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
