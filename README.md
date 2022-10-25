@@ -13,6 +13,7 @@
   </a>
 
   <h3 align="center">巴哈瀑布流 - 場外休憩區閱覽器</h3>
+  <p>無廣告 · 不收集資料 · 完全開源</p>
 
   <p align="center">
     <a href="https://github.com/determinationlove/Baha_MasonryLayout"><strong>Explore the docs »</strong></a>
