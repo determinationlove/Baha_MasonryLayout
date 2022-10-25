@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 interface ArticleBlockStates {
 	
@@ -17,16 +18,27 @@ export class ArticleBlock extends React.Component<ArticleBlockProps, ArticleBloc
 
 	render() {
 		return (
-            <div>
+            <Block>
                 <div>{this.props.code.title}</div>
                 <div>{this.props.code.author}</div>
                 <div>{this.props.code.date}</div>
                 <div>{this.props.code.sort}</div>
                 <div>{this.props.code.gp}</div>
                 <div>{this.props.code.link}</div>
-            </div>
+            </Block>
         );
 	}
 }
+
+const Block = styled.div`
+    display: flex;
+    //width: 100%;
+    //height: 100%;
+    position: relative;
+    background-color: white;
+    box-shadow: 0 4 4 black;
+
+    font-Size: '15px'
+`;
 
 export default ArticleBlock;

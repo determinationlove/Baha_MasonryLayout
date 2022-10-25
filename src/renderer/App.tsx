@@ -1,6 +1,7 @@
 import { MemoryRouter as Router, Routes, Route, BrowserRouter, HashRouter } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
+import styled from "styled-components";
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
@@ -49,15 +50,19 @@ const Hello = ({ bahaData }: Props) => {
 	console.log(Item);
 
     return (
-        <div>
-			<div style={{fontSize: '30px'}}>
+			<Article_Area>
 				{Item.map((id:any, index:any) => {
 					return <ArticleBlock key={index} code={id} />
 				})}
-			</div>
-        </div>
+			</Article_Area>
     );
 };
+
+const Article_Area = styled.div`
+    display: flex;
+    width: 100%;
+    height: 100%;
+`;
 
 export default function App() {
 
