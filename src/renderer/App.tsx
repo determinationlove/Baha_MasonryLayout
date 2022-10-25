@@ -1,7 +1,8 @@
 import { MemoryRouter as Router, Routes, Route, BrowserRouter, HashRouter } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
-import styled from "styled-components";
+import "tailwindcss/tailwind.css";
+import svg_B from '../../assets/./icons/svg/BahaMasonryLayout.svg'
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
@@ -50,19 +51,14 @@ const Hello = ({ bahaData }: Props) => {
 	console.log(Item);
 
     return (
-			<Article_Area>
+			<div className='gap-8 columns-3 text-5xl' >
+                <img src={svg_B}></img>
 				{Item.map((id:any, index:any) => {
 					return <ArticleBlock key={index} code={id} />
 				})}
-			</Article_Area>
+			</div>
     );
 };
-
-const Article_Area = styled.div`
-    display: flex;
-    width: 100%;
-    height: 100%;
-`;
 
 export default function App() {
 
