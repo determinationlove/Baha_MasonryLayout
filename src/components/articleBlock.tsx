@@ -19,7 +19,7 @@ export class ArticleBlock extends React.Component<ArticleBlockProps, ArticleBloc
 
 	render() {
 		return (
-            <div className="flex-col ">
+            <div className="flex-col bg-slate-50 rounded-lg">
                 <div>{this.props.code.title}</div>
                 
                 <div className="flex flex-row container justify-between">
