@@ -9,6 +9,7 @@ import icon from '../../assets/icon.svg';
 import './App.css';
 import 'tailwindcss/tailwind.css';
 import svg_B from '../../assets/./icons/svg/BahaMasonryLayout.svg';
+import png_B from '../../assets/bahamut.png';
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
@@ -26,6 +27,10 @@ export type Props = {
     }[];
 };
 
+function refreshPage() {
+    window.location.reload();
+}
+
 const Hello = ({ bahaData }: Props) => {
     const [Item, setItem] = useState<any>();
 
@@ -36,12 +41,39 @@ const Hello = ({ bahaData }: Props) => {
                 const data = [];
                 const $ = cheerio.load(response.data); // 載入 body
                 const list = $('.b-list__row');
+                const png = png_B;
                 for (let i = 0; i < list.length; i++) {
-                    if (list.eq(i).find('.b-list__main__title ').text() != '') {
+                    if (
+                        list.eq(i).find('.b-list__main__title').text() != '' &&
+                        list
+                            .eq(i)
+                            .find('.b-list__main div div')
+                            .attr('title') != '置頂' &&
+                        list
+                            .eq(i)
+                            .find('.b-list__main div div')
+                            .attr('class') !=
+                            'b-list__summary__mark b-mark b-mark--feature'
+                    ) {
                         const title = list
                             .eq(i)
                             .find('.b-list__main__title ')
                             .text();
+                        const brief = list.eq(i).find('.b-list__brief').text();
+                        
+                        let img = list
+                            .eq(i)
+                            .find('.b-list__main a div')
+                            .attr('data-thumbnail');
+                        if (
+                            list
+                                .eq(i)
+                                .find('.b-list__main a div')
+                                .attr('data-thumbnail') == undefined
+                        ) {
+                            img = png.toString();
+                        }
+
                         const author = list
                             .eq(i)
                             .find('.b-list__count__user a')
@@ -58,12 +90,20 @@ const Hello = ({ bahaData }: Props) => {
                             .eq(i)
                             .find('.b-list__summary__gp')
                             .text();
-                        //const img = list.eq(i).find('.b-list__img lazyloaded').attr('data-thumbnail');
                         const link =
                             'https://forum.gamer.com.tw/' +
                             list.eq(i).find('.b-list__main a').attr('href');
 
-                        data.push({ title, author, date, sort, gp, link });
+                        data.push({
+                            title,
+                            brief,
+                            img,
+                            author,
+                            date,
+                            sort,
+                            gp,
+                            link,
+                        });
                     }
                 }
                 setItem(data);
@@ -72,23 +112,36 @@ const Hello = ({ bahaData }: Props) => {
 
     if (!Item) return null;
 
-    console.log(Item);
+    //console.log(Item[0].img);
 
     return (
         <div className="flex flex-col">
-            <div className="flex justify-center my-16">
+            <div className="my-16 flex justify-center">
                 <img
                     src={svg_B}
-                    className="flex w-20 justify-center"
+                    className="flex w-20 justify-center drop-shadow-logo"
                 ></img>
             </div>
 
-            <div className='flex'>
-                <div className="gap-8 columns-3 text-2xl">
+            <div className="flex">
+                <div className="columns-5 gap-5 text-xl ">
                     {Item.map((id: any, index: any) => {
-                        return <ArticleBlock key={index} code={id} />;
+                        return (
+                            <ArticleBlock
+                                key={index}
+                                code={id}
+                                onfocus={id.link}
+                            />
+                        );
                     })}
                 </div>
+            </div>
+
+            <div>
+                <button
+                    className=" h-40 w-44 bg-emerald-400"
+                    onClick={refreshPage}
+                ></button>
             </div>
         </div>
     );
