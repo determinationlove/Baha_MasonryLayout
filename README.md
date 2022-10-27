@@ -1,3 +1,5 @@
+<a name="readme-top"></a>
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -27,6 +29,35 @@
   </p>
 </div>
 
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+採用瀑布流（Masonry Layout）的視覺設計，重新排版巴哈姆特場外休憩區的文章</p>
+本專案為實戰自學之side project</p>
+爬蟲所呈現的資料皆不會在重整後持續存在，應用程式內無插入廣告，並且開源
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+### Built With
+
+[![React][React.js]][React-url]
+[![Electron][Electron.com]][Electron-url]
+[![TypeScript][TypeScript.com]][TypeScript-url]
+[![Tailwindcss][Tailwindcss.com]][Tailwindcss-url]
+[![Figma][Figma.com]][Figma-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTACT -->
+## Contact
+
+燐火幽冥 - [巴哈姆特小屋](https://home.gamer.com.tw/homeindex.php?owner=guiltyghost)
+
+巴哈小屋文章 - []()
+
+Project Link: [巴哈瀑布流-場外休憩區閱覽器](https://github.com/determinationlove/React_BahaTrain)
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -43,19 +74,14 @@
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: www.linkedin.com/in/幽冥-燐火-a08229237
 [product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
+
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[Tailwindcss.com]:https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwindcss-url]: https://tailwindcss.com/
+[Electron.com]: https://img.shields.io/badge/Electron-191970?style=for-the-badge&logo=Electron&logoColor=white
+[Electron-url]: https://www.electronjs.org/
+[TypeScript.com]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Figma.com]: https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white
+[Figma-url]: https://www.figma.com/
