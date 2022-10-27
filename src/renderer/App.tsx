@@ -5,6 +5,8 @@ import {
     BrowserRouter,
     HashRouter,
 } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+
 import icon from '../../assets/icon.svg';
 import './App.css';
 import 'tailwindcss/tailwind.css';
@@ -13,8 +15,9 @@ import png_B from '../../assets/bahamut.png';
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { useEffect, useRef, useState } from 'react';
+
 import ArticleBlock from 'components/articleBlock';
+import ArticleBody from 'components/ArticleBody';
 
 export type Props = {
     bahaData: {
@@ -33,6 +36,8 @@ function refreshPage() {
 
 const Hello = ({ bahaData }: Props) => {
     const [Item, setItem] = useState<any>();
+    const [OpenArticleBool, setOpenArticleBool] = useState<any>();
+    const [Display_article, setDisplay_article] = useState<any>();
 
     useEffect(() => {
         axios
@@ -60,7 +65,7 @@ const Hello = ({ bahaData }: Props) => {
                             .find('.b-list__main__title ')
                             .text();
                         const brief = list.eq(i).find('.b-list__brief').text();
-                        
+
                         let img = list
                             .eq(i)
                             .find('.b-list__main a div')
@@ -124,12 +129,18 @@ const Hello = ({ bahaData }: Props) => {
             </div>
 
             <div className="flex">
-                <div className="columns-2 desktop:columns-5 xl:columns-4 lg:columns-3 sm:columns-2 gap-5 text-xl ">
+                <div
+                    className="columns-2 gap-5 text-base sm:columns-2 lg:columns-3 xl:columns-4 desktop:columns-5
+                
+                "
+                >
                     {Item.map((id: any, index: any) => {
                         return (
                             <ArticleBlock
                                 key={index}
                                 code={id}
+                                setOpen={setOpenArticleBool}
+                                SetArticleDataFunction={setDisplay_article}
                                 //onfocus={id.link}
                             />
                         );
@@ -137,12 +148,18 @@ const Hello = ({ bahaData }: Props) => {
                 </div>
             </div>
 
-            <div className=' h-40 w-full flex justify-center items-center content-center'>
+            <div className=" flex h-40 w-full content-center items-center justify-center">
                 <button
-                    className=" h-40 w-full bg-emerald-400 justify-center items-center content-center"
+                    className=" h-40 w-full content-center items-center justify-center bg-emerald-400"
                     onClick={refreshPage}
                 ></button>
             </div>
+            {OpenArticleBool && (
+                <ArticleBody
+                    code_Body={...Display_article}
+                    setOpen={setOpenArticleBool}
+                ></ArticleBody>
+            )}
         </div>
     );
 };
