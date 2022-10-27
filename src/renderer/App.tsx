@@ -124,22 +124,22 @@ const Hello = ({ bahaData }: Props) => {
             </div>
 
             <div className="flex">
-                <div className="columns-5 gap-5 text-xl ">
+                <div className="columns-2 desktop:columns-5 xl:columns-4 lg:columns-3 sm:columns-2 gap-5 text-xl ">
                     {Item.map((id: any, index: any) => {
                         return (
                             <ArticleBlock
                                 key={index}
                                 code={id}
-                                onfocus={id.link}
+                                //onfocus={id.link}
                             />
                         );
                     })}
                 </div>
             </div>
 
-            <div>
+            <div className=' h-40 w-full flex justify-center items-center content-center'>
                 <button
-                    className=" h-40 w-44 bg-emerald-400"
+                    className=" h-40 w-full bg-emerald-400 justify-center items-center content-center"
                     onClick={refreshPage}
                 ></button>
             </div>

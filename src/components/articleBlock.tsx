@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'tailwindcss/tailwind.css';
 import test from '../../assets/icon.png';
@@ -7,19 +8,90 @@ import * as cheerio from 'cheerio';
 
 export type Props = {
     code: any;
-    onfocus: (link: any) => void;
+    //onfocus: (link: any) => void;
 };
 
-function ArticleBlock({ code, onfocus }: Props) {
+const ArticleBlock = ({ code }: Props) => {
+    const [Body, setBody] = useState<any>();
     let link = code.link;
+
+    useEffect(() => {
+        axios.get(code.link).then((res) => {
+            const ArticleBody_Data = [];
+            const $ = cheerio.load(res.data);
+            const list = $('.c-section');
+            for (let i = 0; i < list.length; i++) {
+                //let Body_author_name = list.eq(i).find('c-post__header__author a').text();
+                if (
+                    list
+                        .eq(i)
+                        .find('.c-post__header h1')
+                        .hasClass('c-post__header__title') ||
+                    list
+                        .eq(i)
+                        .find('.c-post__header h1')
+                        .hasClass('c-post__header__title is-except')
+                ) {
+                    const Body_title = code.title;
+
+                    const Body_sort = code.sort;
+
+                    const Body_author_id = code.author;
+
+                    const Body_author_name = list
+                        .eq(i)
+                        .find('.username')
+                        .text();
+
+                    const Body_date = list.eq(i).find('.c-post__header__info').find('a').eq(0).text();
+
+                    let Body_device = list.eq(i).find('.c-post__header__info').find('a').eq(1).attr('title');
+                    if (Body_device == undefined) {
+                        Body_device = '電腦發文';
+                    }
+
+                    const Body_gp = list.eq(i).find('.gp a').text();
+
+                    const Body_bp = list.eq(i).find('.bp a').text();
+
+                    ArticleBody_Data.push({
+                        Body_title,
+                        Body_sort,
+                        Body_author_id,
+                        Body_author_name,
+                        Body_date,
+                        Body_device,
+                        Body_gp,
+                        Body_bp,
+                    });
+                }
+                /*
+                
+                
+
+                const Body_gp = list.eq(i).find('c-post__header__author postcount postgp span').text();
+
+                const Body_bp = list.eq(i).find('c-post__header__author postcount postbp span').text();
+                */
+            }
+
+            setBody(ArticleBody_Data);
+            console.log(ArticleBody_Data[0], code.link);
+        });
+    }, []);
+
     return (
         <div
             className="
-            mb-6 flex max-h-full min-h-noImg w-72 max-w-sm 
+            mb-6 flex max-h-full  w-40 max-w-sm 
             flex-col overflow-hidden rounded-md bg-slate-50
             shadow-article
+            lg:max-h-full lg:max-w-s la:w-72
             "
-            onClick={() => onfocus(true)}
+            onClick={() => {
+                console.log(Body[0].Body_title);
+            }}
+
         >
             <div className="relative min-h-noImg overflow-hidden">
                 <div className="absolute flex h-full min-h-noImg w-full content-end items-end">
@@ -48,44 +120,7 @@ function ArticleBlock({ code, onfocus }: Props) {
                 </div>
             </div>
         </div>
-        
     );
-}
-
-function Get_ArticleBody() {
-    axios.get('').then((response) => {
-        const data = [];
-        const $ = cheerio.load(response.data); // 載入 body
-        const list = $('.b-list__row');
-        for (let i = 0; i < list.length; i++) {
-            const title = list.eq(i).find('.b-list__main__title ').text();
-            const brief = list.eq(i).find('.b-list__brief').text();
-            let img = list
-                .eq(i)
-                .find('.b-list__main a div')
-                .attr('data-thumbnail');
-            const author = list.eq(i).find('.b-list__count__user a').text();
-            const date = list.eq(i).find('.b-list__time__edittime a').text();
-            const sort = list.eq(i).find('.b-list__summary__sort').text();
-            const gp = list.eq(i).find('.b-list__summary__gp').text();
-            const link =
-                'https://forum.gamer.com.tw/' +
-                list.eq(i).find('.b-list__main a').attr('href');
-
-            data.push({
-                title,
-                brief,
-                img,
-                author,
-                date,
-                sort,
-                gp,
-                link,
-            });
-        }
-
-        //setItem(data);
-    });
-}
+};
 
 export default ArticleBlock;

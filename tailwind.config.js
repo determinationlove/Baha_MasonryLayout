@@ -25,6 +25,10 @@ module.exports = {
       minHeight: {
         'noImg': '4rem',
       },
+
+      screens: {
+        'desktop': '1600px',
+      },
     },
   },
   variants: {
