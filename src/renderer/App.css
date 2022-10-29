@@ -22,6 +22,22 @@ body {
     align-items: center;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgb(198, 198, 198); 
+    border-radius: 10px;
+}
+
 button {
     background-color: white;
     padding: 10px 20px;
@@ -50,6 +66,7 @@ a {
     height: fit-content;
     width: fit-content;
     margin: 10px;
+    color: lightseagreen;
 }
 
 a:hover {

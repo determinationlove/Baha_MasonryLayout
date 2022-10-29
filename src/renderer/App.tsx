@@ -120,7 +120,7 @@ const Hello = ({ bahaData }: Props) => {
     //console.log(Item[0].img);
 
     return (
-        <div className="flex flex-col">
+        <div className={OpenArticleBool ? "flex flex-col w-full relative overflow-hidden" : "flex flex-col w-full relative"}>
             <div className="my-16 flex justify-center">
                 <img
                     src={svg_B}

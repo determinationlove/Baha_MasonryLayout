@@ -22,8 +22,23 @@ module.exports = {
         'article': '0 3px 3px 0.1px rgb(0 0 0 / 0.3), 0 3px 3px 0.1px rgb(0 0 0 / 0.3)',
       },
 
+      width: {
+        'iframe': '50rem',
+        'gamercard': '110px',
+      },
+
+      height: {
+        'content': '90vh',
+        'iframe': '30rem',
+        'gamercard': '160px',
+      },
+
       minHeight: {
         'noImg': '4rem',
+      },
+
+      overflowScroll: {
+        'bml': 'overflow-y: scroll, display: none',
       },
 
       screens: {
