@@ -143,7 +143,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
             "
             onClick={() => {
                 setOpen(true);
-                SetArticleDataFunction(Body[0]);
+                SetArticleDataFunction(Body?.[0]);
                 console.log(Body);
             }}
         >
