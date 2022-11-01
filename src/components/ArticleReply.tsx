@@ -12,10 +12,58 @@ export type Props = {
 };
 
 const ArticleReply = ({ Body_Reply }: Props) => {
+    const [Concent, setConcent] = React.useState();
+
     const pic = Body_Reply.Reply_pic;
     const name = Body_Reply.Reply_name;
-    const concent = Body_Reply.Reply_concent;
+    let concent = Body_Reply.Reply_concent;
     const time = Body_Reply.Reply_time;
+
+    useEffect(() => {
+        function HyperLinkConverter(text: any) {
+            var urlRegex =
+                /(\b(https?|ftp|file):\/\/[-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[-A-Za-z0-9+&@#\/%=~_|])/gi;
+
+            var BahaImg = 
+                /(https:\/\/truth\.bahamut\.com\.tw\/s01\/[0-9]+\/(([0-9a-z)+([0-9a-z]+)+)\.JPG\?w=300)/gi
+
+            var Gif = 
+                /(https:\/\/[-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[-A-Za-z0-9+&@#\/%=~_|]\.gif)/gi
+            
+            var youtube = 
+                /((http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?))/gi
+            
+
+            if (text.match(BahaImg)) {
+                // add logic
+                text = text.toString().replace(BahaImg, 
+                    "<a href='$1' target='_blank'><img src='$1'></img></a>"
+                );
+            }
+            else if (text.match(Gif)) {
+                text = text.toString().replace(Gif, 
+                    "<a href='$1' target='_blank'><img src='$1'></img></a>"
+                );
+            }
+            else if (text.match(youtube)) {
+                text = text.toString().replace(youtube, 
+                    "<iframe width='50%' src='https://www.youtube.com/embed/$3' frameborder='0'></iframe>"
+                );
+            }
+            else {
+                text = text.toString().replace(urlRegex, 
+                    "<a href='$1' target='_blank' class='text-teal-600'>$1</a>"
+                );
+            }
+
+            return text;
+        }
+
+        concent = HyperLinkConverter(concent); 
+        setConcent(concent);
+    }, []);
+
+    console.log(Concent);
 
     return (
         <div className="mb-5 flex flex-row items-start">
@@ -28,17 +76,17 @@ const ArticleReply = ({ Body_Reply }: Props) => {
                 <div className="flex w-full flex-row items-start">
                     <div
                         dangerouslySetInnerHTML={{ __html: name }}
-                        className="mr-5 whitespace-nowrap text-teal-700 font-medium"
+                        className="mr-5 whitespace-nowrap font-medium text-teal-700"
                     ></div>
 
                     <div
-                        dangerouslySetInnerHTML={{ __html: concent }}
+                        dangerouslySetInnerHTML={{ __html: Concent! }}
                         className="w-full"
                     ></div>
                 </div>
                 <div
                     dangerouslySetInnerHTML={{ __html: time }}
-                    className="w-full flex flex-row text-zinc-500"
+                    className="flex w-full flex-row text-zinc-500"
                 ></div>
             </div>
         </div>

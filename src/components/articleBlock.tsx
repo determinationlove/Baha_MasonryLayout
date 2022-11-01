@@ -31,6 +31,12 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                     $(this).attr('class', 'max-w-full mb-2 max-h-fit');
                 });
 
+                $('a').each(function () {
+                    //將 <a> 的屬性新增 blank
+                    $(this).attr('target', '_blank');
+                    $(this).addClass('text-teal-600');
+                });
+
                 $('iframe').each(function () {
                     //將 <iframe> 的屬性新增 src
                     var old_src = $(this).attr('data-src');
@@ -185,7 +191,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                                 'Body_content.length == 0, 第二層判斷: 原文已被站方刪除'
                             );
                             Body_content =
-                                '<div>[oh！ 這文章沒有內容，許是死了！]</div>';
+                                '<div class="text-slate-500">[oh！ 這文章沒有內容，許是死了！ 你可以點擊 "查看來源" 確認是否真是如此]</div>';
                         }
                     }
 

@@ -33,8 +33,13 @@ module.exports = {
         'gamercard': '160px',
       },
 
+      minWidth: {
+        'gamercard': '110px',
+      },
+
       minHeight: {
         'noImg': '4rem',
+        'gamercard': '160px',
       },
 
       overflowScroll: {
@@ -44,10 +49,14 @@ module.exports = {
       screens: {
         'desktop': '1440px',
       },
+
+      
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      textColor: ['visited'],
+    },
   },
   plugins: [ 
     require('@tailwindcss/typography'),

@@ -48,22 +48,22 @@ const ArticleBody = ({ code_Body, setOpen }: Props) => {
                 <div
                     ref={ref}
                     className=" max-w fixed flex h-content w-5/12 flex-col
-				 items-start justify-start overflow-hidden rounded-2xl bg-white p-5 lg:w-8/12
+				 items-start justify-start overflow-y-hidden rounded-2xl bg-white p-5 lg:w-8/12
                  desktop:w-8/12 desktop:p-10
 				"
                 >
                     <div className="flex h-full w-full flex-row  overflow-x-visible overflow-y-scroll">
-                        <div className="flex lg:w-40 desktop:mr-2 desktop:w-40">
+                        <div className="flex lg:w-40 lg:m-2 desktop:m-2 desktop:w-40">
                             <img
                                 src={code_Body?.Body_card}
                                 className="flex h-0 w-0 rounded-md border-slate-400 outline-offset-2 outline-cyan-500
-                                xl:h-gamercard xl:w-gamercard xl:border-2 xl:outline
-                                lg:h-gamercard lg:w-gamercard lg:border-2 lg:outline
+                                lg:h-gamercard lg:w-gamercard lg:border-2 lg:outline lg:min-w-gamercard lg:min-h-gamercard
+                                xl:h-gamercard xl:w-gamercard xl:border-2 xl:outline xl:min-w-gamercard xl:min-h-gamercard
                                 desktop:h-gamercard desktop:w-gamercard desktop:border-2 desktop:outline"
                             />
                         </div>
 
-                        <div className="flex h-full w-full flex-col">
+                        <div className="flex h-full w-full flex-col ">
                             <div className="text-2xl ">
                                 {code_Body?.Body_title}
                             </div>
