@@ -16,8 +16,6 @@ export type Props = {
 const ArticleBody = ({ code_Body, setOpen }: Props) => {
     const ref = useRef(null);
 
-    //console.log(code_Body.Reply);
-
     //文章區域外部點擊檢測
     function useOutsideCheck(ref: any) {
         useEffect(() => {

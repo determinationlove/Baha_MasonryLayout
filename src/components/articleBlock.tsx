@@ -83,50 +83,6 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         // 刪除訪客留言
                         $(this).remove();
                     });
-
-                /*
-                list.eq(i)
-                    .find('.c-reply__item div')
-                    .each(function () {
-                        // 每個留言橫向排列
-                        $(this).attr(
-                            'class',
-                            'flex flex-row items-start w-full'
-                        );
-                    });
-
-                // 留言者暱稱顏色
-                list.eq(i)
-                    .find('.reply-content__user')
-                    .each(function () {
-                        $(this).attr(
-                            'class',
-                            'text-teal-700 whitespace-nowrap'
-                        );
-                    });
-
-                // 留言時間
-                list.eq(i)
-                    .find('.c-reply__item div')
-                    .eq(2)
-                    .eq(0)
-                    .each(function () {
-                        $(this).attr(
-                            'class',
-                            'flex items-center justify-end text-gray-500'
-                        );
-                    });
-
-                list.eq(i)
-                    .find('.reply-content__footer')
-                    .each(function () {
-                        // 留言時間位置靠後
-                        $(this).attr(
-                            'class',
-                            'flex flex-row items-center justify-end'
-                        );
-                    });
-                */
             }
 
             for (let i = 0; i < list.length; i++) {
@@ -216,10 +172,9 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         i < Reply_list.find('.c-reply__item').length;
                         i++
                     ) {
-                        $('a').each(function() { // Go through all links
-                            if ($(this).text() == "https://") { // Change text to whatever you want to compare
-                                // Do what you want with links having certain text
-                                $(this).attr('href', $(this).text())
+                        $('a').each(function () {
+                            if ($(this).text() == 'https://') {
+                                $(this).attr('href', $(this).text());
                             }
                         });
 
@@ -261,7 +216,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         });
                     }
 
-                    console.log(Reply[0]?.Reply_pic, Reply_list.length);
+                    //console.log(Reply[0]?.Reply_pic, Reply_list.length);
 
                     ArticleBody_Data.push({
                         Body_title,
@@ -293,9 +248,13 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
             shadow-article lg:max-h-full lg:w-72 desktop:w-72
             "
             onClick={() => {
-                setOpen(true);
-                SetArticleDataFunction(Body?.[0]);
-                console.log(Body);
+                // 因為 onClick 作為元件的一部份優先被渲染，這裡要加入等待 useEffect 執行完、為 Body 賦值後才運作的機制
+                if (Body != null) {
+                    SetArticleDataFunction(Body?.[0]);
+                    setOpen(true);
+                }
+
+                //console.log(Body);
             }}
         >
             <div className="relative min-h-noImg overflow-hidden">

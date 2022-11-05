@@ -63,7 +63,7 @@ const ArticleReply = ({ Body_Reply }: Props) => {
         setConcent(concent);
     }, []);
 
-    console.log(Concent);
+    //console.log(Concent);
 
     return (
         <div className="mb-5 flex flex-row items-start">
