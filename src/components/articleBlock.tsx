@@ -7,6 +7,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import ArticleBody from './ArticleBody';
 import { eq } from 'cheerio/lib/api/traversing';
+import { hasClass } from 'cheerio/lib/api/attributes';
 
 export type Props = {
     code: any;
@@ -16,11 +17,14 @@ export type Props = {
 
 const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
     const [Body, setBody] = useState<any>();
-    const ArticleBody_Data: any = [];
+    let ArticleBody_Data: any = [];
+    const Body_Data: any = [];
     useEffect(() => {
         axios.get(code.link).then((res) => {
             const $ = cheerio.load(res.data);
             const list = $('.c-section');
+            let li = -2;
+            let ri = 0;
 
             // 先把來源不可用的attr修正
             for (let i = 0; i < list.length; i++) {
@@ -86,35 +90,47 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
             }
 
             for (let i = 0; i < list.length; i++) {
+                //================= 樓層 =================//
+                let Body_title = null;
+                let Body_sort = null;
+                let Body_author_id = null;
+                let Body_author_name = null;
+                let Body_date = null;
+                let Body_device = null;
+                let Body_gp = null;
+                let Body_bp = null;
+                let Body_content = null;
+                let Body_link = null;
+                let Body_card = null;
+                let Reply: any = [];
+
                 if (
-                    list
-                        .eq(i)
-                        .find('.c-post__header h1')
-                        .hasClass('c-post__header__title') ||
-                    list
-                        .eq(i)
-                        .find('.c-post__header h1')
-                        .hasClass('c-post__header__title is-except')
+                    list.eq(i).attr('id') != undefined && 
+                    !list.eq(i).children('.c-disable').length &&
+                    !list.eq(i).children('.page').length &&
+                    !list.eq(i).children('.popular').length
                 ) {
-                    const Body_title = code.title;
+                    li += 1;
 
-                    const Body_sort = code.sort;
-
-                    const Body_author_id = code.author;
-
-                    const Body_author_name = list
+                    Body_title = list
                         .eq(i)
-                        .find('.username')
+                        .find('.c-post__header__title')
                         .text();
 
-                    const Body_date = list
+                    Body_sort = code.sort;
+
+                    Body_author_id = code.author;
+
+                    Body_author_name = list.eq(i).find('.username').text();
+
+                    Body_date = list
                         .eq(i)
                         .find('.c-post__header__info')
                         .find('a')
                         .eq(0)
                         .text();
 
-                    let Body_device = list
+                    Body_device = list
                         .eq(i)
                         .find('.c-post__header__info')
                         .find('a')
@@ -124,17 +140,17 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         Body_device = '電腦發文';
                     }
 
-                    const Body_gp = list.eq(i).find('.gp a').text();
+                    Body_gp = list.eq(i).find('.gp a').text();
 
-                    const Body_bp = list.eq(i).find('.bp a').text();
+                    Body_bp = list.eq(i).find('.bp a').text();
 
-                    //------------ 主樓內容 ------------//
-                    let Body_content: any = list
+                    //================= 主樓內容 =================//
+                    Body_content = list
                         .eq(i)
                         .find('.c-article__content')
                         .html();
 
-                    if (Body_content.length == 0) {
+                    if (Body_content?.length == 0) {
                         console.log(
                             'Body_content.length == 0, 第一層判斷: 只有一行文字'
                         );
@@ -142,36 +158,80 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                             .eq(i)
                             .find('.c-article__content')
                             .text();
-                        if (Body_content.length == 0) {
+                    }
+                    if (Body_content == null) {
+                        if (list.eq(i).children('.c-disable').length) {
                             console.log(
-                                'Body_content.length == 0, 第二層判斷: 原文已被站方刪除'
+                                '樓層：',
+                                i,
+                                '第二層判斷: 原文被噓到摺疊'
                             );
                             Body_content =
-                                '<div class="text-slate-500">[oh！ 這文章沒有內容，許是死了！ 你可以點擊 "查看來源" 確認是否真是如此]</div>';
+                                '<div class="text-red-600">[噓到摺疊]</div>';
+                        } else if (list.eq(i).children('.popular').length) {
+                            console.log('樓層：', i, '第三層判斷: 猜你喜歡');
+                            Body_content =
+                                '<div class="text-red-600">[猜你喜歡]</div>';
+                        } else if (list.eq(i).children('.page').length) {
+                            console.log('樓層：', i, '第四層判斷: 總頁碼');
+                            Body_content =
+                                '<div class="text-red-600">[猜你喜歡]</div>';
+                        } else {
+                            console.log(
+                                '樓層：',
+                                i,
+                                '第五層判斷: 原文已被站方刪除'
+                            );
+                            Body_content =
+                                '<div class="text-red-600">[oh！ 這文章沒有內容，許是死了！ 你可以點擊 "查看來源" 確認是否真是如此]</div>';
                         }
                     }
 
-                    const Body_link = code.link;
+                    Body_link = 'https://forum.gamer.com.tw/' + list.eq(i).find('.c-post__header__author a').attr('href');
 
-                    const Body_card = list
-                        .eq(i)
-                        .find('.c-user a img')
-                        .attr('src');
+                    Body_card = list.eq(i).find('.c-user a img').attr('src');
+                } else {
+                    li += 1;
+                }
 
-                    //================= 留言區 =================//
+                if (Body_title?.length == 0) {
+                    Body_title = li + '樓 回覆 →';
+                }
 
-                    const Reply: any = [];
-                    // 這裡的 eq(0) 指的不是以原本的 DOM 上面排序的 eq(0)
-                    // 而是把所有的 $('.c-section').find('.c-post__footer.c-reply') 篩出來之後開始數的第一順位
-                    const Reply_list = $('.c-section')
+                //================= 留言區 =================//
+
+                // 這裡的 eq(0) 指的不是以原本的 DOM 上面排序的 eq(0)
+                // 而是把所有的 $('.c-section').find('.c-post__footer.c-reply') 篩出來之後開始數的第一順位
+                let Reply_list = null;
+                //console.log(Reply_list.length);
+
+                if (
+                    list.eq(i).attr('id') != undefined &&
+                    !list.eq(i).children('.c-disable').length &&
+                    !list.eq(i).children('.page').length &&
+                    !list.eq(i).children('.popular').length
+                ) {
+                    /*console.log(
+                        '迴圈：',
+                        i,
+                        '　留言區：',
+                        list.eq(i).attr('id') != undefined &&
+                            !list.eq(i).children('.c-disable').length &&
+                            !list.eq(i).children('.page').length &&
+                            !list.eq(i).children('.popular').length
+                    );*/
+
+                    Reply_list = $('.c-section')
                         .find('.c-post__footer.c-reply')
-                        .eq(0);
+                        .eq(ri);
 
                     for (
-                        let i = 0;
-                        i < Reply_list.find('.c-reply__item').length;
-                        i++
+                        let r = 0;
+                        r < Reply_list.find('.c-reply__item').length;
+                        r++
                     ) {
+                        //if (list.eq(i).children('.c-disable').length) { continue; }
+
                         $('a').each(function () {
                             if ($(this).text() == 'https://') {
                                 $(this).attr('href', $(this).text());
@@ -180,7 +240,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
 
                         // 大頭貼
                         const Reply_pic: any = Reply_list.find('.c-reply__item')
-                            .eq(i)
+                            .eq(r)
                             .find('.reply-avatar.user--sm')
                             .html();
 
@@ -188,7 +248,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         const Reply_name: any = Reply_list.find(
                             '.c-reply__item'
                         )
-                            .eq(i)
+                            .eq(r)
                             .find('.reply-content__user')
                             .html();
 
@@ -196,7 +256,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         const Reply_concent: any = Reply_list.find(
                             '.c-reply__item'
                         )
-                            .eq(i)
+                            .eq(r)
                             .find('.comment_content')
                             .html();
 
@@ -204,7 +264,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         const Reply_time: any = Reply_list.find(
                             '.c-reply__item'
                         )
-                            .eq(i)
+                            .eq(r)
                             .find('.reply-content__footer')
                             .html();
 
@@ -214,26 +274,47 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                             Reply_concent,
                             Reply_time,
                         });
+
+                        // 迴圈1的時候因為偵測到猜你喜歡
+                        // 雖然打包了所有留言區的第1個留言區，但被下方的條件判斷式阻擋合成，然後就直接到迴圈2了
+                        // 導致第1個留言區直接被吃，由下一個遞補，因此從二樓開始每樓層的留言區都變成下一層的留言區
                     }
 
-                    //console.log(Reply[0]?.Reply_pic, Reply_list.length);
+                    ri += 1;
+                }
 
-                    ArticleBody_Data.push({
-                        Body_title,
-                        Body_sort,
-                        Body_author_id,
-                        Body_author_name,
-                        Body_date,
-                        Body_device,
-                        Body_gp,
-                        Body_bp,
-                        Body_content,
-                        Body_link,
-                        Body_card,
-                        Reply,
-                    });
+                //================= 樓層元素合成 =================//
+                if (list.eq(i).attr('id') != undefined) {
+                    //console.log(list.eq(i).eq(0).html());
+                    //console.log(list.eq(i).children('.c-disable').length);
+                    if (
+                        !list.eq(i).children('.c-disable').length &&
+                        !list.eq(i).children('.page').length &&
+                        !list.eq(i).children('.popular').length
+                    ) {
+                        Body_Data.push({
+                            Body_title,
+                            Body_sort,
+                            Body_author_id,
+                            Body_author_name,
+                            Body_date,
+                            Body_device,
+                            Body_gp,
+                            Body_bp,
+                            Body_content,
+                            Body_link,
+                            Body_card,
+                            Reply,
+                        });
+                    }
                 }
             }
+
+            //================= 整個討論串賦值 =================//
+
+            ArticleBody_Data.push({
+                Body_Data,
+            });
 
             setBody(ArticleBody_Data);
         });

@@ -109,6 +109,8 @@ const Hello = ({ bahaData }: Props) => {
                             gp,
                             link,
                         });
+
+                        console.log(data);
                     }
                 }
                 setItem(data);
@@ -117,14 +119,14 @@ const Hello = ({ bahaData }: Props) => {
 
     if (!Item) return null;
 
-    //console.log(Item[0].img);
+   
 
     return (
         <div
             className={
                 OpenArticleBool
-                    ? 'relative flex w-full flex-col overflow-hidden'
-                    : 'relative flex w-full flex-col'
+                    ? 'relative flex w-full flex-col items-center overflow-hidden'
+                    : 'relative flex w-full flex-col items-center'
             }
         >
             <div className="my-16 flex justify-center">
@@ -162,7 +164,7 @@ const Hello = ({ bahaData }: Props) => {
             </div>
             {OpenArticleBool && (
                 <ArticleBody
-                    code_Body={...Display_article}
+                    code_Body={Display_article?.Body_Data}
                     setOpen={setOpenArticleBool}
                 ></ArticleBody>
             )}

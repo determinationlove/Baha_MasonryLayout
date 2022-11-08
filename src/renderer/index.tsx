@@ -2,9 +2,6 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import "tailwindcss/tailwind.css";
 
-import axios from 'axios';
-import * as cheerio from 'cheerio';
-
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 root.render(<App />);

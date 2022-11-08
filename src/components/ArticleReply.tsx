@@ -69,24 +69,25 @@ const ArticleReply = ({ Body_Reply }: Props) => {
         <div className="mb-5 flex flex-row items-start">
             <div
                 dangerouslySetInnerHTML={{ __html: pic }}
-                className="mr-1 h-12 max-h-fit w-12 max-w-full desktop:mr-3"
+                className="mr-1 h-12 max-h-fit w-0 desktop:w-12 max-w-full desktop:mr-3"
             ></div>
 
             <div className="flex w-full flex-col items-start">
                 <div className="flex w-full flex-row items-start">
                     <div
                         dangerouslySetInnerHTML={{ __html: name }}
-                        className="mr-5 whitespace-nowrap font-medium text-teal-700"
+                        className="mr-5 whitespace-nowrap font-medium text-teal-700 
+                        text-sm desktop:text-base"
                     ></div>
 
                     <div
                         dangerouslySetInnerHTML={{ __html: Concent! }}
-                        className="w-full"
+                        className="w-full text-sm desktop:text-base"
                     ></div>
                 </div>
                 <div
                     dangerouslySetInnerHTML={{ __html: time }}
-                    className="flex w-full flex-row text-zinc-500"
+                    className="flex w-full flex-row text-zinc-500 text-sm desktop:text-base"
                 ></div>
             </div>
         </div>
