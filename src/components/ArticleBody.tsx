@@ -10,13 +10,15 @@ import ArticleReply from './ArticleReply';
 
 export type Props = {
     code_Body: any;
+    code_Page: any;
     setOpen: (open: boolean) => void;
 };
 
-const ArticleBody = ({ code_Body, setOpen }: Props) => {
+const ArticleBody = ({ code_Body, code_Page, setOpen }: Props) => {
+
+    //================= 文章區域外部點擊檢測 =================//
     const ref = useRef(null);
 
-    //文章區域外部點擊檢測
     function useOutsideCheck(ref: any) {
         useEffect(() => {
             function handleClickOutside(event: any) {
@@ -36,6 +38,14 @@ const ArticleBody = ({ code_Body, setOpen }: Props) => {
 
     useOutsideCheck(ref);
 
+    //================= 換頁偵測 =================//
+    let page = code_Page;
+
+    useEffect(() => {
+        
+
+    }, []);
+
     return (
         <div className="absolute z-20 h-full w-full bg-black/70">
             <div className="flex h-screen w-full items-center justify-center">
@@ -48,9 +58,17 @@ const ArticleBody = ({ code_Body, setOpen }: Props) => {
                 >
                     <div className="flex flex-col overflow-y-scroll h-full relative bg-slate-100 
                     desktop:bg-white w-full desktop:w-full">
+
+                        <div dangerouslySetInnerHTML={{ __html: page }}>
+
+                        </div>
+
                         {code_Body?.map((id: any, index: any) => {
                             const Tohtml = id.Body_content;
                             const url = id.Body_link;
+                            //let page = code_Body.pageBar;
+
+                            
 
                             return (
                                 <div className="flex h-auto w-full flex-row overflow-visible relative 

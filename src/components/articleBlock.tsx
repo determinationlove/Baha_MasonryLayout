@@ -19,6 +19,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
     const [Body, setBody] = useState<any>();
     let ArticleBody_Data: any = [];
     const Body_Data: any = [];
+    let pageBar: any = [];
     useEffect(() => {
         axios.get(code.link).then((res) => {
             const $ = cheerio.load(res.data);
@@ -105,7 +106,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                 let Reply: any = [];
 
                 if (
-                    list.eq(i).attr('id') != undefined && 
+                    list.eq(i).attr('id') != undefined &&
                     !list.eq(i).children('.c-disable').length &&
                     !list.eq(i).children('.page').length &&
                     !list.eq(i).children('.popular').length
@@ -187,7 +188,13 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         }
                     }
 
-                    Body_link = 'https://forum.gamer.com.tw/' + list.eq(i).find('.c-post__header__author a').attr('href');
+                    //Body_Alink = code.link;
+                    Body_link =
+                        'https://forum.gamer.com.tw/' +
+                        list
+                            .eq(i)
+                            .find('.c-post__header__author a')
+                            .attr('href');
 
                     Body_card = list.eq(i).find('.c-user a img').attr('src');
                 } else {
@@ -302,11 +309,27 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                             Body_gp,
                             Body_bp,
                             Body_content,
+                            //Body_Alink,
                             Body_link,
                             Body_card,
                             Reply,
                         });
                     }
+                }
+
+                //================= 獲取換頁 =================//
+
+                pageBar = list.eq(i).find('.c-section__main.page').html();
+                let $p = ;
+                for (let i = 0; i < pageBar.length; i++) {
+                    $p('a').each(function () {
+                        var old_href = $p(this).attr('href');
+                        $p(this).attr(
+                            'href',
+                            'https://forum.gamer.com.tw/C.php' + old_href
+                        );
+                        //$(this).attr('class', 'max-w-full mb-2 max-h-fit');
+                    });
                 }
             }
 
@@ -314,6 +337,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
 
             ArticleBody_Data.push({
                 Body_Data,
+                pageBar,
             });
 
             setBody(ArticleBody_Data);

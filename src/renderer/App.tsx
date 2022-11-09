@@ -110,7 +110,7 @@ const Hello = ({ bahaData }: Props) => {
                             link,
                         });
 
-                        console.log(data);
+                        //console.log(data);
                     }
                 }
                 setItem(data);
@@ -165,6 +165,7 @@ const Hello = ({ bahaData }: Props) => {
             {OpenArticleBool && (
                 <ArticleBody
                     code_Body={Display_article?.Body_Data}
+                    code_Page={Display_article?.pageBar}
                     setOpen={setOpenArticleBool}
                 ></ArticleBody>
             )}
