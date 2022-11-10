@@ -13,15 +13,24 @@ export type Props = {
     code: any;
     setOpen: (open: boolean) => void;
     SetArticleDataFunction: (articl: any) => void;
+    Page: any;
 };
 
-const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
+const ArticleBlock = ({ code, setOpen, SetArticleDataFunction, Page }: Props) => {
     const [Body, setBody] = useState<any>();
+    const [P, setP] = useState<any>();
+
     let ArticleBody_Data: any = [];
     const Body_Data: any = [];
-    let pageBar: any = [];
+    let clink: any;
+
     useEffect(() => {
-        axios.get(code.link).then((res) => {
+        setP(Page)
+        //console.log(code.link);
+
+        clink = code.link + '&to=' + P;
+
+        axios.get(clink).then((res) => {
             const $ = cheerio.load(res.data);
             const list = $('.c-section');
             let li = -2;
@@ -188,13 +197,16 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         }
                     }
 
-                    //Body_Alink = code.link;
-                    Body_link =
-                        'https://forum.gamer.com.tw/' +
-                        list
-                            .eq(i)
-                            .find('.c-post__header__author a')
-                            .attr('href');
+                    if (li > 1) {
+                        Body_link =
+                            'https://forum.gamer.com.tw/' +
+                            list
+                                .eq(i)
+                                .find('.c-post__header__author a')
+                                .attr('href');
+                    } else {
+                        Body_link = code.link;
+                    }
 
                     Body_card = list.eq(i).find('.c-user a img').attr('src');
                 } else {
@@ -316,33 +328,17 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction }: Props) => {
                         });
                     }
                 }
-
-                //================= 獲取換頁 =================//
-
-                pageBar = list.eq(i).find('.c-section__main.page').html();
-                let $p = ;
-                for (let i = 0; i < pageBar.length; i++) {
-                    $p('a').each(function () {
-                        var old_href = $p(this).attr('href');
-                        $p(this).attr(
-                            'href',
-                            'https://forum.gamer.com.tw/C.php' + old_href
-                        );
-                        //$(this).attr('class', 'max-w-full mb-2 max-h-fit');
-                    });
-                }
             }
 
             //================= 整個討論串賦值 =================//
 
             ArticleBody_Data.push({
                 Body_Data,
-                pageBar,
             });
 
             setBody(ArticleBody_Data);
         });
-    }, []);
+    }, [Page]);
 
     return (
         <div
