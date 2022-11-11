@@ -38,10 +38,9 @@ const Hello = ({ bahaData }: Props) => {
     const [Item, setItem] = useState<any>();
     const [OpenArticleBool, setOpenArticleBool] = useState<any>();
     const [Display_article, setDisplay_article] = useState<any>();
-    //const [Transport_setPage, setTransport_setPage] = useState<any>();
+    const ref = useRef(null);
 
-    //console.log(Transport_setPage);
-
+    //================= 抓取瀑布流文章塊的資料 =================//
     useEffect(() => {
         axios
             .get('https://forum.gamer.com.tw/B.php?bsn=60076')
@@ -100,7 +99,8 @@ const Hello = ({ bahaData }: Props) => {
                             .text();
                         const link =
                             'https://forum.gamer.com.tw/' +
-                            list.eq(i).find('.b-list__main a').attr('href');
+                            list.eq(i).find('.b-list__main a').attr('href') +
+                            '&to=';
 
                         data.push({
                             title,
@@ -120,7 +120,27 @@ const Hello = ({ bahaData }: Props) => {
             });
     }, []);
 
-    if (!Item) return null;
+    //================= 文章區域外部點擊檢測 =================//
+
+    function useOutsideCheck(ref: any) {
+        useEffect(() => {
+            function handleClickOutside(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setOpenArticleBool(false);
+                    
+                }
+            }
+            // Bind the event listener
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                // Unbind the event listener on clean up
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }, [ref]);
+    }
+    useOutsideCheck(ref);
+
+    //================= return =================//
 
     return (
         <div
@@ -143,14 +163,12 @@ const Hello = ({ bahaData }: Props) => {
                 
                 "
                 >
-                    {Item.map((id: any, index: any) => {
+                    {Item?.map((id: any, index: any) => {
                         return (
                             <ArticleBlock
-                                key={index}
                                 code={id}
                                 setOpen={setOpenArticleBool}
-                                SetArticleDataFunction={setDisplay_article}
-                                //Page={Transport_setPage}
+                                Set_ArticleData={setDisplay_article}
                             />
                         );
                     })}
@@ -164,12 +182,19 @@ const Hello = ({ bahaData }: Props) => {
                 ></button>
             </div>
             {OpenArticleBool && (
-                <ArticleBody
-                
-                    code_Body={Display_article?.Body_Data}
-                    setOpen={setOpenArticleBool}
-                    //setPage={setTransport_setPage}
-                ></ArticleBody>
+                <div className="absolute z-20 h-full w-full bg-black/70">
+                    <div className="flex h-screen w-full items-center justify-center">
+                        <div
+                            ref={ref}
+                            className=" max-w fixed flex h-content w-11/12 flex-col
+                             items-start justify-start overflow-y-hidden rounded-2xl bg-white p-5
+                             lg:w-8/12 desktop:w-8/12 desktop:p-10
+                            "
+                        >
+                            <ArticleBody code={Display_article} OpenCheck={OpenArticleBool}/>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );
