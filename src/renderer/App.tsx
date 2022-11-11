@@ -38,9 +38,9 @@ const Hello = ({ bahaData }: Props) => {
     const [Item, setItem] = useState<any>();
     const [OpenArticleBool, setOpenArticleBool] = useState<any>();
     const [Display_article, setDisplay_article] = useState<any>();
-    const [Transport_setPage, setTransport_setPage] = useState<any>();
-    
-    console.log(Transport_setPage);
+    //const [Transport_setPage, setTransport_setPage] = useState<any>();
+
+    //console.log(Transport_setPage);
 
     useEffect(() => {
         axios
@@ -118,11 +118,9 @@ const Hello = ({ bahaData }: Props) => {
                 }
                 setItem(data);
             });
-    }, [Transport_setPage]);
+    }, []);
 
     if (!Item) return null;
-
-   
 
     return (
         <div
@@ -152,7 +150,7 @@ const Hello = ({ bahaData }: Props) => {
                                 code={id}
                                 setOpen={setOpenArticleBool}
                                 SetArticleDataFunction={setDisplay_article}
-                                Page={Transport_setPage}
+                                //Page={Transport_setPage}
                             />
                         );
                     })}
@@ -167,9 +165,10 @@ const Hello = ({ bahaData }: Props) => {
             </div>
             {OpenArticleBool && (
                 <ArticleBody
+                
                     code_Body={Display_article?.Body_Data}
                     setOpen={setOpenArticleBool}
-                    setPage={setTransport_setPage}
+                    //setPage={setTransport_setPage}
                 ></ArticleBody>
             )}
         </div>

@@ -11,10 +11,10 @@ import ArticleReply from './ArticleReply';
 export type Props = {
     code_Body: any;
     setOpen: (open: boolean) => void;
-    setPage: (p: any) => void;
+    //setPage: (p: any) => void;
 };
 
-const ArticleBody = ({ code_Body, setOpen, setPage }: Props) => {
+const ArticleBody = ({ code_Body, setOpen, }: Props) => {
     //================= 文章區域外部點擊檢測 =================//
     const ref = useRef(null);
 
@@ -24,7 +24,6 @@ const ArticleBody = ({ code_Body, setOpen, setPage }: Props) => {
                 if (ref.current && !ref.current.contains(event.target)) {
                     //console.log("關閉文章");
                     setOpen(false);
-                    setPage(P);
                 }
             }
             // Bind the event listener
@@ -40,6 +39,7 @@ const ArticleBody = ({ code_Body, setOpen, setPage }: Props) => {
 
     //================= 換頁偵測 =================//
     let P = 1;
+    var getID;
 
     return (
         <div className="absolute z-20 h-full w-full bg-black/70">
@@ -54,7 +54,8 @@ const ArticleBody = ({ code_Body, setOpen, setPage }: Props) => {
                     <button
                         className="relative flex h-10 w-10 bg-emerald-400"
                         onClick={() => {
-                            setPage(P + 20);
+                            Display_article?.Body_Data.Body_link + '&to=' + 21;
+                            console.log(Display_article?.Body_Data.Body_link + '&to=' + 21);
                         }}
                     ></button>
 
@@ -65,7 +66,7 @@ const ArticleBody = ({ code_Body, setOpen, setPage }: Props) => {
                         {code_Body?.map((id: any, index: any) => {
                             const Tohtml = id.Body_content;
                             const url = id.Body_link;
-                            //let page = code_Body.pageBar;
+                            getID = id;
 
                             return (
                                 <div

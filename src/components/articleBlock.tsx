@@ -13,24 +13,24 @@ export type Props = {
     code: any;
     setOpen: (open: boolean) => void;
     SetArticleDataFunction: (articl: any) => void;
-    Page: any;
+    //Page: any;
 };
 
-const ArticleBlock = ({ code, setOpen, SetArticleDataFunction, Page }: Props) => {
+const ArticleBlock = ({ code, setOpen, SetArticleDataFunction, }: Props) => {
     const [Body, setBody] = useState<any>();
-    const [P, setP] = useState<any>();
+    //const [P, setP] = useState<any>();
 
     let ArticleBody_Data: any = [];
     const Body_Data: any = [];
     let clink: any;
 
     useEffect(() => {
-        setP(Page)
+        //setP(Page)
         //console.log(code.link);
 
-        clink = code.link + '&to=' + P;
+        //clink = code.link + '&to=' + P;
 
-        axios.get(clink).then((res) => {
+        axios.get(code.link).then((res) => {
             const $ = cheerio.load(res.data);
             const list = $('.c-section');
             let li = -2;
@@ -338,7 +338,7 @@ const ArticleBlock = ({ code, setOpen, SetArticleDataFunction, Page }: Props) =>
 
             setBody(ArticleBody_Data);
         });
-    }, [Page]);
+    }, []);
 
     return (
         <div
