@@ -18,7 +18,7 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
     const Body_Data: any = [];
     let P: any = useRef(1);
     let clink: string = code.link + P.current;
-    let canChangePage: any = useRef(false);
+    let cantChangePage: any = useRef(false);
 
     const [Body, setBody] = useState<any>();
     const [Page, setPage] = useState<any>(clink);
@@ -215,14 +215,14 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                     }
 
                     Body_card = list.eq(i).find('.c-user a img').attr('src');
-                } 
-                else  {
+                } else {
                     li += 1;
                 }
 
                 if (
                     list.eq(i).attr('id') != undefined &&
-                    list.eq(i).children('.c-disable').length && list.eq(i).find('.show').text() == '展開文章'
+                    list.eq(i).children('.c-disable').length &&
+                    list.eq(i).find('.show').text() == '展開文章'
                 ) {
                     li -= 1;
                 }
@@ -231,18 +231,39 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                     if (P == 1) {
                         Body_title = li + '樓 回覆 →';
                     } else {
-                        Body_title = (li + P.current) + '樓 回覆 →';
+                        Body_title = li + P.current + '樓 回覆 →';
                     }
                 }
 
+                //================= 判斷還有沒有下一頁 =================//
                 if (
                     list.eq(0).attr('id') == undefined &&
                     list.eq(0).children('.page').length
                 ) {
-                    canChangePage.current = false;
+                    if (
+                        list
+                            .eq(0)
+                            .find('.BH-pagebtnA')
+                            .children('a')
+                            .last()
+                            .attr('class') != 'pagenow text-teal-600'
+                    ) {
+                        cantChangePage.current = false;
+                    } else {
+                        cantChangePage.current = true;
+                    }
                 } else {
-                    canChangePage.current = true;
+                    cantChangePage.current = true;
                 }
+
+                console.log(
+                    list
+                        .eq(0)
+                        .find('.BH-pagebtnA')
+                        .children('a')
+                        .last()
+                        .attr('class') == 'pagenow text-teal-600'
+                );
 
                 //================= 留言區 =================//
 
@@ -362,28 +383,46 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
         });
     }, [Page]);
 
-    console.log(canChangePage.current);
+    //console.log(cantChangePage.current);
 
     return (
         <div
             className="relative flex h-full w-full flex-col overflow-y-scroll 
             bg-slate-100 desktop:w-full desktop:bg-white"
         >
-            <div className="flex flex-row h-10 mb-5">
+            <div className="m-2 flex h-10 flex-row">
                 <button
-                    className="relative  flex h-10 w-20 items-center justify-center bg-emerald-300 p-2"
+                    className="relative mr-3 flex h-10 w-20 items-center 
+                    justify-center bg-emerald-300 p-2 text-stone-700"
                     onClick={() => {
-                        P.current += 20;
-                        clink = code.link + P.current;
-                        setPage(clink);
+                        if (P.current > 20) {
+                            P.current -= 20;
+                            clink = code.link + P.current;
+                            setPage(clink);
+                        }
+                    }}
+                >
+                    上一頁
+                </button>
+
+                <button
+                    className="relative flex h-10 w-20 items-center justify-center 
+                    bg-emerald-300 p-2 text-stone-700"
+                    onClick={() => {
+                        if (cantChangePage.current == false) {
+                            P.current += 20;
+                            clink = code.link + P.current;
+                            setPage(clink);
+                        }
                     }}
                 >
                     下一頁
                 </button>
+
                 <div
                     className={
-                        canChangePage.current
-                            ? 'relative  flex h-10 w-auto items-center justify-center ml-5 text-zinc-400'
+                        cantChangePage.current
+                            ? 'relative  ml-5 flex h-10 w-auto items-center justify-center text-zinc-400'
                             : 'hidden'
                     }
                 >

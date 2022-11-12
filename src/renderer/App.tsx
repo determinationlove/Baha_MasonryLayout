@@ -10,8 +10,9 @@ import { useEffect, useRef, useState } from 'react';
 import icon from '../../assets/icon.svg';
 import './App.css';
 import 'tailwindcss/tailwind.css';
-import svg_B from '../../assets/./icons/svg/BahaMasonryLayout.svg';
+import svg_B from '../../assets/./icons/svg/BahaMasonryLayout黑.svg';
 import png_B from '../../assets/bahamut.png';
+import reload from '../../assets/./icons/reload.png';
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
@@ -175,11 +176,15 @@ const Hello = ({ bahaData }: Props) => {
                 </div>
             </div>
 
-            <div className=" flex h-40 w-full content-center items-center justify-center">
+            <div className=" flex h-20 w-20 content-center items-center justify-center my-20">
                 <button
-                    className=" h-40 w-full content-center items-center justify-center bg-emerald-400"
+                    className=" h-14 w-14 content-center items-center justify-center p-2
+                    outline outline-offset-2 outline-2 outline-teal-200"
                     onClick={refreshPage}
-                ></button>
+                >
+                    <img src={reload}
+                    className="flex w-20 justify-center drop-shadow-logo"></img>
+                </button>
             </div>
             {OpenArticleBool && (
                 <div className="absolute z-20 h-full w-full bg-black/70">
