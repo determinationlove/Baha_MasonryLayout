@@ -73,7 +73,8 @@ const createWindow = async () => {
         show: false,
         width: 1024,
         height: 728,
-        icon: getAssetPath('icon.png'),
+        icon: getAssetPath('icons/baha_icon.ico'),
+        title: '巴哈瀑布流',
         webPreferences: {
             webSecurity: false,
             preload: app.isPackaged
