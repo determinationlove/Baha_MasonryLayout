@@ -34,7 +34,9 @@
 
 採用瀑布流（Masonry Layout）的視覺設計，重新排版巴哈姆特場外休憩區的文章</p>
 本專案為實戰自學之side project</p>
-爬蟲所呈現的資料皆不會在重整後持續存在，應用程式內無插入廣告，並且開源
+爬蟲所呈現的資料皆不會在重整後持續存在，應用程式內無插入廣告，並且開源</p>
+　</p>
+※若巴哈原站HTML架構大改，本應用程式很可能因此而出bug，如有問題請至<a href="https://github.com/determinationlove/Baha_MasonryLayout/issues">回報區</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -46,6 +48,14 @@
 [![TypeScript][TypeScript.com]][TypeScript-url]
 [![Tailwindcss][Tailwindcss.com]][Tailwindcss-url]
 [![Figma][Figma.com]][Figma-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- 下載 -->
+## Download Baha Masonry Layout
+
+請至 <a href="https://drive.google.com/file/d/10sVwn-yNCIeYIIY_cTnwgNao2SkvDsQM/view?usp=share_link">雲端硬碟</a> 下載檔案</p>
+將 .zip檔 解壓縮後，開啟資料夾中的 <strong>巴哈瀑布流.exe檔</strong>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
