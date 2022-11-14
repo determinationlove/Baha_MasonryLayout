@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import icon from '../../assets/icon.svg';
 import './App.css';
 import 'tailwindcss/tailwind.css';
+import svg_W from '../../assets/./icons/svg/BahaMasonryLayout.svg';
 import svg_B from '../../assets/./icons/svg/BahaMasonryLayout黑.svg';
 import png_B from '../../assets/bahamut.png';
 import reload from '../../assets/./icons/reload.png';
@@ -19,6 +20,8 @@ import * as cheerio from 'cheerio';
 
 import ArticleBlock from 'components/articleBlock';
 import ArticleBody from 'components/ArticleBody';
+import Setting from 'components/setting';
+import { logDOM } from '@testing-library/react';
 
 export type Props = {
     bahaData: {
@@ -35,11 +38,17 @@ function refreshPage() {
     window.location.reload();
 }
 
+
 const Hello = ({ bahaData }: Props) => {
     const [Item, setItem] = useState<any>();
     const [OpenArticleBool, setOpenArticleBool] = useState<any>();
     const [Display_article, setDisplay_article] = useState<any>();
     const ref = useRef(null);
+
+    const [DKMlogo, setDKMlogo] = useState<any>(false);
+    let logo: any;
+
+    const [UserBG, setUserBG] = useState<any>();
 
     //================= 抓取瀑布流文章塊的資料 =================//
     useEffect(() => {
@@ -128,7 +137,6 @@ const Hello = ({ bahaData }: Props) => {
             function handleClickOutside(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
                     setOpenArticleBool(false);
-                    
                 }
             }
             // Bind the event listener
@@ -141,19 +149,40 @@ const Hello = ({ bahaData }: Props) => {
     }
     useOutsideCheck(ref);
 
+    //================= 偵測闇黑模式 =================//
+    var logoimg: HTMLElement | null = window.document.getElementById('logo');
+
+    function pictureChange() {
+        if (DKMlogo) {
+            logo = svg_W;
+            console.log(localStorage.getItem('DARK_MODE'));
+            //console.log('logo偵測到闇黑模式')
+        } else {
+            logo = svg_B;
+            //console.log('logo svg_B')
+        }
+    }
+
+    pictureChange();
+
     //================= return =================//
 
     return (
         <div
             className={
                 OpenArticleBool
-                    ? 'relative flex w-full flex-col items-center overflow-hidden'
-                    : 'relative flex w-full flex-col items-center'
+                    ? 'relative flex w-full flex-col items-center overflow-hidden dark:bg-neutral-900'
+                    : 'relative flex w-full flex-col items-center dark:bg-neutral-900'
             }
         >
+            <div className="absolute mr-20 mt-5 flex w-full justify-end">
+                <Setting DKMlogo={setDKMlogo} UserBG={setUserBG}></Setting>
+            </div>
+
             <div className="my-16 flex justify-center">
                 <img
-                    src={svg_B}
+                    id="logo"
+                    src={logo}
                     className="flex w-20 justify-center drop-shadow-logo"
                 ></img>
             </div>
@@ -176,14 +205,16 @@ const Hello = ({ bahaData }: Props) => {
                 </div>
             </div>
 
-            <div className=" flex h-20 w-20 content-center items-center justify-center my-20">
+            <div className=" my-20 flex h-20 w-20 content-center items-center justify-center">
                 <button
                     className=" h-14 w-14 content-center items-center justify-center p-2
-                    outline outline-offset-2 outline-2 outline-teal-200"
+                    outline outline-2 outline-offset-2 outline-teal-200"
                     onClick={refreshPage}
                 >
-                    <img src={reload}
-                    className="flex w-20 justify-center drop-shadow-logo"></img>
+                    <img
+                        src={reload}
+                        className="flex w-20 justify-center drop-shadow-logo"
+                    ></img>
                 </button>
             </div>
             {OpenArticleBool && (
@@ -192,11 +223,14 @@ const Hello = ({ bahaData }: Props) => {
                         <div
                             ref={ref}
                             className=" max-w fixed flex h-content w-11/12 flex-col
-                             items-start justify-start overflow-y-hidden rounded-2xl bg-white p-5
+                             items-start justify-start overflow-y-hidden rounded-2xl bg-white p-5 dark:bg-neutral-700
                              lg:w-8/12 desktop:w-8/12 desktop:p-10
                             "
                         >
-                            <ArticleBody code={Display_article} OpenCheck={OpenArticleBool}/>
+                            <ArticleBody
+                                code={Display_article}
+                                OpenCheck={OpenArticleBool}
+                            />
                         </div>
                     </div>
                 </div>

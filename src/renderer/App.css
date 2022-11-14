@@ -86,3 +86,50 @@ a:hover {
     align-items: center;
     margin: 20px 0;
 }
+
+label {
+    width: 5rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: rgb(228, 234, 234);
+    border-radius: 2rem;
+
+    margin-right: 10%;
+}
+
+label::after {
+    content: "";
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    position: absolute;
+    background: rgb(66, 201, 188);
+    border-radius: 1.5rem;
+    margin-left: 10%;
+}
+
+input {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+input:checked + label {
+    background: rgb(95, 95, 95);
+}
+
+input:checked + label::after {
+    margin-left: 90%;
+    transform: translateX(-100%);
+    background: rgb(171, 255, 235);
+}
+
+label, label::after {
+    transition: 0.3s;
+}
+
+label:active::after {
+    width: 5rem;
+}

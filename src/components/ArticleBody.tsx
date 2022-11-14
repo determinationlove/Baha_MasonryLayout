@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import 'tailwindcss/tailwind.css';
 import test from '../../assets/icon.png';
 import axios from 'axios';
@@ -40,6 +39,10 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                 li = -2;
             }
 
+            if (!list.eq(0).find('.BH-pagebtnA').children('a').length) {
+                li = -2;
+            }
+
             // 先把來源不可用的attr修正
             for (let i = 0; i < list.length; i++) {
                 $('img').each(function () {
@@ -52,7 +55,7 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                 $('a').each(function () {
                     //將 <a> 的屬性新增 blank
                     $(this).attr('target', '_blank');
-                    $(this).addClass('text-teal-600');
+                    $(this).addClass('text-teal-600 dark:text-teal-400');
                 });
 
                 $('iframe').each(function () {
@@ -71,6 +74,13 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                         //將 <iframe> 的屬性新增 src
                         $(this).removeAttr('href');
                     });
+
+                $('font').each(function () {
+                    if (!$(this).children().length) {
+                        $(this).removeAttr('color');
+                        $(this).addClass('dark:mix-blend-screen');
+                    }
+                });
 
                 // ------ 留言區整理 ------
                 list.eq(i)
@@ -256,15 +266,6 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                     cantChangePage.current = true;
                 }
 
-                console.log(
-                    list
-                        .eq(0)
-                        .find('.BH-pagebtnA')
-                        .children('a')
-                        .last()
-                        .attr('class') == 'pagenow text-teal-600'
-                );
-
                 //================= 留言區 =================//
 
                 // 這裡的 eq(0) 指的不是以原本的 DOM 上面排序的 eq(0)
@@ -388,12 +389,12 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
     return (
         <div
             className="relative flex h-full w-full flex-col overflow-y-scroll 
-            bg-slate-100 desktop:w-full desktop:bg-white"
+            bg-slate-100 dark:bg-neutral-700 desktop:w-full desktop:bg-white"
         >
             <div className="m-2 flex h-10 flex-row">
                 <button
                     className="relative mr-3 flex h-10 w-20 items-center 
-                    justify-center bg-emerald-300 p-2 text-stone-700"
+                    justify-center bg-emerald-300 p-2 text-stone-700 dark:bg-emerald-100"
                     onClick={() => {
                         if (P.current > 20) {
                             P.current -= 20;
@@ -407,7 +408,7 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
 
                 <button
                     className="relative flex h-10 w-20 items-center justify-center 
-                    bg-emerald-300 p-2 text-stone-700"
+                    bg-emerald-300 p-2 text-stone-700 dark:bg-emerald-100"
                     onClick={() => {
                         if (cantChangePage.current == false) {
                             P.current += 20;
@@ -437,7 +438,7 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                 return (
                     <div
                         className="relative my-2 ml-2 flex h-auto w-full 
-                                flex-row overflow-visible bg-white p-5 desktop:my-10 desktop:ml-0 desktop:p-0"
+                                flex-row overflow-visible bg-white p-5 dark:bg-neutral-700 desktop:my-10 desktop:ml-0 desktop:p-0"
                     >
                         <div className="flex lg:m-2 lg:w-40 desktop:m-2 desktop:w-40">
                             <img
@@ -450,29 +451,29 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                         </div>
 
                         <div className="flex h-full w-full flex-col ">
-                            <div className="text-xl desktop:text-2xl ">
+                            <div className="text-xl dark:text-white desktop:text-2xl">
                                 {id.Body_title}
                             </div>
                             <div className="flex w-full flex-col p-2 desktop:p-5">
                                 <div className="flex w-full flex-row items-center justify-between">
-                                    <div className="text-base text-teal-700 desktop:text-lg">
+                                    <div className="text-base text-teal-700 dark:text-teal-500 desktop:text-lg">
                                         {id.Body_author_name}／
                                         {id.Body_author_id}
                                     </div>
                                     <a
                                         href={url}
                                         target="_blank"
-                                        className="text-sm text-blue-500 desktop:text-lg desktop:font-medium"
+                                        className="text-sm text-blue-500 dark:text-blue-300 desktop:text-lg desktop:font-medium"
                                     >
                                         查看來源
                                     </a>
                                 </div>
 
-                                <div className="mt-2 flex w-full flex-row items-center justify-between text-gray-500 desktop:mt-5">
+                                <div className="mt-2 flex w-full flex-row items-center justify-between text-gray-500 dark:text-gray-400 desktop:mt-5">
                                     <div className="text-sm desktop:text-lg">
                                         {id.Body_date}
                                     </div>
-                                    <div className="flex flex-row desktop:text-xl">
+                                    <div className="flex flex-row dark:text-slate-200 desktop:text-xl">
                                         推-
                                         <div className="mr-2  text-orange-500 desktop:mr-10">
                                             {id.Body_gp}
@@ -484,14 +485,14 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
                                     </div>
                                 </div>
                             </div>
-                            <hr className="my-3 w-full"></hr>
+                            <hr className="my-3 w-full dark:border-neutral-600"></hr>
                             <div
                                 dangerouslySetInnerHTML={{
                                     __html: Tohtml,
                                 }}
-                                className="w-full p-2 desktop:p-10 "
+                                className="w-full p-2 dark:text-slate-100 desktop:p-10"
                             ></div>
-                            <hr className="my-3 w-full"></hr>
+                            <hr className="my-3 w-full dark:border-neutral-600"></hr>
 
                             {id.Reply.map((_id: any, index: any) => {
                                 return (

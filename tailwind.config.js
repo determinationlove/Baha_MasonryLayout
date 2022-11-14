@@ -6,7 +6,6 @@ module.exports = {
     './src/renderer/**/*.{js,jsx,ts,tsx,ejs}',
     './src/components/**/*.{js,jsx,ts,tsx,ejs}',
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {

@@ -22,7 +22,7 @@ const ArticleBlock = ({ code, setOpen, Set_ArticleData }: Props) => {
             className="
             lg:max-w-s mb-6 flex max-h-full w-52 
             max-w-sm flex-col overflow-hidden rounded-md
-            bg-slate-50
+            bg-slate-50 dark:bg-zinc-700
             shadow-article lg:max-h-full lg:w-72 desktop:w-72
             "
             onClick={() => {
@@ -49,7 +49,7 @@ const ArticleBlock = ({ code, setOpen, Set_ArticleData }: Props) => {
                 <div className="ml-3 flex w-full flex-col items-start justify-end">
                     <div
                         className="flex h-8 w-fit items-center justify-center  text-xs
-                    lg:text-sm xl:text-sm desktop:text-sm
+                    lg:text-sm xl:text-sm desktop:text-sm dark:text-zinc-300
                     "
                     >
                         作者／{code.author}
@@ -57,14 +57,15 @@ const ArticleBlock = ({ code, setOpen, Set_ArticleData }: Props) => {
                 </div>
 
                 <div
-                    className="m-3 text-sm text-slate-600 line-clamp-3
+                    className="m-3 text-sm text-slate-600 dark:text-slate-100 line-clamp-3
                 lg:text-base xl:text-base desktop:text-base
                 "
                 >
                     {code.brief}
                 </div>
 
-                <div className="container box-border flex flex-row justify-between p-3 text-sm text-teal-800">
+                <div className="container box-border flex flex-row justify-between p-3 text-sm 
+                text-teal-800 dark:text-teal-500">
                     <div className="flex ">{code.sort}</div>
                     <div className="flex ">{code.date}</div>
                 </div>
