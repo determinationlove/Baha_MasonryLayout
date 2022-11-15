@@ -143,7 +143,10 @@ const ArticleBody = ({ code, OpenCheck }: Props) => {
 
                     Body_sort = code.sort;
 
-                    Body_author_id = code.author;
+                    Body_author_id = list
+                    .eq(i)
+                    .find('.userid')
+                    .text();
 
                     Body_author_name = list.eq(i).find('.username').text();
 

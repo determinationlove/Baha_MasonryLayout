@@ -1,5 +1,5 @@
 {
-  "description": "A foundation for scalable desktop apps",
+  "description": "巴哈姆特場外休憩區 砌體佈局排版",
   "keywords": [
     "electron",
     "boilerplate",
@@ -200,6 +200,7 @@
   "build": {
     "productName": "巴哈瀑布流",
     "appId": "org.erb.ElectronReact",
+    "icon" : "assets/bahamut_ICON.png",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -257,8 +258,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "燐火幽冥",
+      "repo": "Baha-Masonry-Layout"
     }
   },
   "collective": {

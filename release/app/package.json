@@ -1,7 +1,8 @@
 {
   "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "version": "1.0.0",
+  "icon": "../../assets/icons/baha_icon.ico",
+  "description": "巴哈姆特場外休憩區 砌體佈局排版",
   "license": "MIT",
   "author": {
     "name": "Electron React Boilerplate Maintainers",
