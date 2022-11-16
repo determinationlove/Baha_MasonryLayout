@@ -29,6 +29,14 @@
   </p>
 </div>
 
+　</p>
+ 
+<div class="half" align="center">
+    <img src="https://i.imgur.com/YLPa0Mb.png" width="50%" height="90%"></img><img src="https://i.imgur.com/92wI4r2.png" width="50%" height="90%"></img>
+</div>
+
+　</p>
+
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
