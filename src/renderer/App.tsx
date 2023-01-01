@@ -53,7 +53,7 @@ const Hello = ({ bahaData }: Props) => {
     //================= 抓取瀑布流文章塊的資料 =================//
     useEffect(() => {
         axios
-            .get('https://forum.gamer.com.tw/B.php?bsn=60076')
+            .get('https://forum.gamer.com.tw/B.php?bsn=60030')
             .then((response) => {
                 const data = [];
                 const $ = cheerio.load(response.data); // 載入 body
